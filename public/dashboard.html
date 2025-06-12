@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Core Bot Solutions</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="logo">
+                <h1>Core<span>.</span></h1>
+            </div>
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+            </div>
+            <p>Authenticating...</p>
+        </div>
+    </div>
+
+    <!-- Authentication Wall -->
+    <div id="authWall" class="auth-wall" style="display: none;">
+        <div class="auth-wall-content">
+            <div class="logo">
+                <h1>Core<span>.</span></h1>
+            </div>
+            <div class="auth-message">
+                <i class="fas fa-lock"></i>
+                <h2>Authentication Required</h2>
+                <p>You must be logged in to access the dashboard.</p>
+                <button onclick="redirectToLogin()" class="btn btn-primary">Go to Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div id="dashboardContent" class="dashboard-container" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <h1>Core<span>.</span></h1>
+                </div>
+                <button class="theme-toggle" id="sidebarThemeToggle" title="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#dashboard" class="nav-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#bots" class="nav-link"><i class="fas fa-robot"></i> My Bots</a></li>
+                    <li id="adminPanelMenuItem" class="admin-only" style="display: none;">
+                        <a href="#admin" class="nav-link" id="adminPanelLink">
+                            <i class="fas fa-crown"></i> Admin Panel
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="username" id="sidebarUsername">Loading...</span>
+                        <span class="user-role" id="userRole">User</span>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Welcome back, <span id="headerUsername">User</span></h1>
+                    <p>Manage your bots and monitor performance</p>
+                </div>
+                <div class="header-right">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                    </button>
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-content">
+                            <h2>Hello, <span id="welcomeUsername">User</span></h2>
+                            <p>Ready to manage your bot operations? Let's get started with your professional dashboard.</p>
+                        </div>
+                        <div class="welcome-stats">
+                            <div class="stat-item">
+                                <span class="stat-number" id="userBotCount">0</span>
+                                <span class="stat-label">Your Bots</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="activeBotCount">0</span>
+                                <span class="stat-label">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalBotsCount">0</h3>
+                            <p>Total Bots</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="activeBotsCount">0</h3>
+                            <p>Active Bots</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="inactiveBotsCount">0</h3>
+                            <p>Inactive Bots</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>99.5%</h3>
+                            <p>Uptime</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bot Management Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2>Bot Management</h2>
+                        <div class="section-actions">
+                            <button class="btn btn-secondary" id="refreshBtn">
+                                <i class="fas fa-sync-alt"></i>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bot-grid" id="userBotGrid">
+                        <!-- User bots will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Bot Sharing Section -->
+                <div class="section" id="sharedBotsSection" style="display: none;">
+                    <div class="section-header">
+                        <h2>Shared Bots</h2>
+                        <p>Bots shared with you by other users</p>
+                    </div>
+                    
+                    <div class="bot-grid" id="sharedBotGrid">
+                        <!-- Shared bots will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div id="notificationsPanel" class="notifications-panel" style="display: none;">
+        <div class="notifications-header">
+            <h3>Notifications</h3>
+            <div class="notifications-actions">
+                <button class="btn btn-secondary btn-sm" id="clearNotificationsBtn">
+                    <i class="fas fa-trash"></i>
+                    Clear All
+                </button>
+                <button class="btn btn-secondary btn-sm" id="closeNotifications">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Notifications will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminPanelModal" class="modal admin-modal" style="display: none;">
+        <div class="modal-content admin-content">
+            <div class="modal-header">
+                <h2>Admin Panel</h2>
+                <button class="modal-close" id="closeAdminPanel">&times;</button>
+            </div>
+            <div class="modal-body admin-body">
+                <div class="admin-tabs">
+                    <button class="tab-btn active" data-tab="bots">Bot Management</button>
+                    <button class="tab-btn" data-tab="users">User Management</button>
+                    <button class="tab-btn" data-tab="notifications">Send Notifications</button>
+                    <button class="tab-btn" data-tab="sharing">Bot Sharing</button>
+                </div>
+
+                <!-- Bot Management Tab -->
+                <div id="botsTab" class="tab-content active">
+                    <div class="admin-section-header">
+                        <h3>All Registered Bots</h3>
+                        <div class="admin-section-actions">
+                            <button class="btn btn-primary" id="createAdminBotBtn">
+                                <i class="fas fa-plus"></i>
+                                Create Bot
+                            </button>
+                            <button class="btn btn-secondary" id="refreshAdminBots">
+                                <i class="fas fa-sync-alt"></i>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <div class="admin-bot-list" id="adminBotList">
+                        <!-- Admin bot list will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- User Management Tab -->
+                <div id="usersTab" class="tab-content" style="display: none;">
+                    <div class="admin-section-header">
+                        <h3>User Management</h3>
+                        <div class="admin-section-actions">
+                            <button class="btn btn-primary" id="createUserBtn">
+                                <i class="fas fa-plus"></i>
+                                Create User
+                            </button>
+                            <button class="btn btn-secondary" id="refreshUsers">
+                                <i class="fas fa-sync-alt"></i>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <div class="admin-user-list" id="adminUserList">
+                        <!-- User list will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Notifications Tab -->
+                <div id="notificationsTab" class="tab-content" style="display: none;">
+                    <div class="admin-section-header">
+                        <h3>Send Notification</h3>
+                    </div>
+                    <form id="notificationForm" class="notification-form">
+                        <div class="form-group">
+                            <label for="notificationTitle">Title</label>
+                            <input type="text" id="notificationTitle" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="notificationMessage">Message</label>
+                            <textarea id="notificationMessage" name="message" rows="4" required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="notificationType">Type</label>
+                                <select id="notificationType" name="type">
+                                    <option value="info">Info</option>
+                                    <option value="success">Success</option>
+                                    <option value="warning">Warning</option>
+                                    <option value="error">Error</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="targetUser">Target User</label>
+                                <select id="targetUser" name="targetUser">
+                                    <option value="">All Users (Broadcast)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Notification</button>
+                    </form>
+                </div>
+
+                <!-- Bot Sharing Tab -->
+                <div id="sharingTab" class="tab-content" style="display: none;">
+                    <div class="admin-section-header">
+                        <h3>Bot Sharing Management</h3>
+                    </div>
+                    <div class="sharing-controls">
+                        <div class="form-group">
+                            <label for="shareBotSelect">Select Bot to Share</label>
+                            <select id="shareBotSelect">
+                                <option value="">Select a bot...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="shareUserSelect">Share with User</label>
+                            <select id="shareUserSelect">
+                                <option value="">Select a user...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sharePermissions">Permissions</label>
+                            <select id="sharePermissions">
+                                <option value="view">View Only</option>
+                                <option value="edit">View & Edit Settings</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" id="shareBotBtn">Share Bot</button>
+                    </div>
+                    <div class="shared-bots-list" id="sharedBotsList">
+                        <!-- Shared bots list will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bot Registration Modal -->
+    <div id="botRegistrationModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Register New Bot</h2>
+                <button class="modal-close" id="closeBotModal">&times;</button>
+            </div>
+            <form id="botRegistrationForm" class="modal-body">
+                <div class="form-group">
+                    <label for="personName">Person's Name</label>
+                    <input type="text" id="personName" name="personName" required>
+                </div>
+                <div class="form-group">
+                    <label for="botName">Bot's Name</label>
+                    <input type="text" id="botName" name="botName" required>
+                </div>
+                <div class="form-group">
+                    <label for="serverLink">Server Link</label>
+                    <input type="url" id="serverLink" name="serverLink" required>
+                </div>
+                <div class="form-group">
+                    <label for="subscriptionType">Subscription Type</label>
+                    <select id="subscriptionType" name="subscriptionType">
+                        <option value="hobby">Hobby</option>
+                        <option value="standard">Standard</option>
+                        <option value="pro">Pro</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelBotRegistration">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Register Bot</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Registration Modal -->
+    <div id="userRegistrationModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New User</h2>
+                <button class="modal-close" id="closeUserModal">&times;</button>
+            </div>
+            <form id="userRegistrationForm" class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="newUsername">Username</label>
+                        <input type="text" id="newUsername" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newUserEmail">Email</label>
+                        <input type="email" id="newUserEmail" name="email">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="newUserPassword">Password</label>
+                        <input type="password" id="newUserPassword" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newUserRole">Role</label>
+                        <select id="newUserRole" name="role">
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                            <option value="hr_admin">HR Admin</option>
+                            <option value="owner">Owner</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelUserRegistration">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bot Edit Modal -->
+    <div id="botEditModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Bot</h2>
+                <button class="modal-close" id="closeBotEditModal">&times;</button>
+            </div>
+            <form id="botEditForm" class="modal-body">
+                <input type="hidden" id="editBotId" name="botId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editPersonName">Person's Name</label>
+                        <input type="text" id="editPersonName" name="personName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editBotName">Bot's Name</label>
+                        <input type="text" id="editBotName" name="botName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editServerLink">Server Link</label>
+                    <input type="url" id="editServerLink" name="serverLink" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editSubscriptionType">Subscription Type</label>
+                        <select id="editSubscriptionType" name="subscriptionType">
+                            <option value="hobby">Hobby</option>
+                            <option value="standard">Standard</option>
+                            <option value="pro">Pro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editStatus">Status</label>
+                        <select id="editStatus" name="status">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="terminated">Terminated</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="terminationReasonGroup" style="display: none;">
+                    <label for="terminationReason">Termination Reason</label>
+                    <textarea id="terminationReason" name="terminationReason" rows="3" placeholder="Enter reason for termination"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelBotEdit">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Bot</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bot Sharing Modal -->
+    <div id="botSharingModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Share Bot</h2>
+                <button class="modal-close" id="closeBotSharingModal">&times;</button>
+            </div>
+            <form id="botSharingForm" class="modal-body">
+                <input type="hidden" id="shareBotId" name="botId">
+                <div class="form-group">
+                    <label for="shareWithUser">Share with User</label>
+                    <select id="shareWithUser" name="targetUserId" required>
+                        <option value="">Select a user...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sharePermissions">Permissions</label>
+                    <select id="sharePermissions" name="permissions">
+                        <option value="view">View Only</option>
+                        <option value="edit">View & Edit Settings</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelBotSharing">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Share Bot</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

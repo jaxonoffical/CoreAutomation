@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Core Bot Solutions</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-background">
+            <div class="bg-pattern"></div>
+        </div>
+        
+        <header class="login-header">
+            <div class="logo">
+                <h1>Core<span>.</span></h1>
+                <p>Professional Bot Solutions</p>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="/" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+            </div>
+        </header>
+
+        <main class="login-main">
+            <div class="login-card">
+                <div class="form-toggle">
+                    <button type="button" class="toggle-btn active" id="loginToggle">Sign In</button>
+                    <button type="button" class="toggle-btn" id="signupToggle">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <div class="form-container" id="loginContainer">
+                    <div class="form-header">
+                        <div class="form-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to access your dashboard</p>
+                    </div>
+
+                    <form class="auth-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="username" name="username" required placeholder="Enter your username">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                                <button type="button" class="toggle-password" id="toggleLoginPassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="remember">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-text">Sign In</span>
+                            <div class="btn-loader">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Signup Form -->
+                <div class="form-container hidden" id="signupContainer">
+                    <div class="form-header">
+                        <div class="form-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h2>Create Account</h2>
+                        <p>Join our professional platform</p>
+                    </div>
+
+                    <form class="auth-form" id="signupForm">
+                        <div class="form-group">
+                            <label for="signup-username">Username</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="signup-username" name="signup-username" required placeholder="Choose a username">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" id="signup-password" name="signup-password" required placeholder="Create a password">
+                                <button type="button" class="toggle-password" id="toggleSignupPassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm your password">
+                                <button type="button" class="toggle-password" id="toggleConfirmPassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="terms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="#" class="terms-link">Terms of Service</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-text">Create Account</span>
+                            <div class="btn-loader">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="login-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Enterprise Security</h3>
+                    <p>Bank-level encryption and security protocols protect your data.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Comprehensive insights and real-time performance monitoring.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Expert technical support available around the clock.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="login-footer">
+            <p>&copy; 2025 Core Bot Solutions. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Support</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>
